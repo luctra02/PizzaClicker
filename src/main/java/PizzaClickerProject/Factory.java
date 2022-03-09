@@ -23,7 +23,7 @@ public class Factory {
             throw new IllegalArgumentException("Invalid username! Make sure the name is between 6-20 characters from a-z.");
         }
         if(factoryName == "lucaspai"){
-            currentBalance = 100000;
+            currentBalance = 100000000;
         }
         factoryName += "'s factory";
         foundingDate = new Date();
@@ -41,7 +41,7 @@ public class Factory {
     public void upgradePizza(){
         
         if (pizza.getCurrentPizza() + 1 > pizza.getPizzaTypeLength()) {
-            throw new IllegalArgumentException("Too much pizza!!!");
+            throw new IllegalArgumentException("You already have Grandiosa");
         }
 
         if(getCurrentBalance() < pizza.getNextPizzaCost()){
@@ -109,7 +109,6 @@ public class Factory {
         efficiency += 0.1;
         upgradecost *= 1.5;
         temp.increaseEfficiency(efficiency);
-
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), workers.get(workertype).get(1), efficiency, upgradecost, workers.get(workertype).get(4));
     }
 
@@ -120,11 +119,6 @@ public class Factory {
 
     
 
-    @Override
-    public String toString() {
-        return "Factory [workers=" + workers + "]";
-    }
-
     public Worker getWorkerObject(String workerType) {
         return workerObjects.get(workerTypes.indexOf(workerType));
 
@@ -134,15 +128,23 @@ public class Factory {
         return workers;
     }
 
+    @Override
+    public String toString() {
+        return "Factory [workers=" + workers + "]";
+    }
+
     public static void main(String[] args) {
 
         Factory lucas = new Factory("lucaspai");
-        System.out.println(lucas.getCurrentBalance());
-        lucas.upgradePizza();
-        lucas.upgradePizza();
-        lucas.upgradePizza();
+        lucas.buyWorkers("worker5", 1);
+        System.out.println(lucas.getWorkerObject("worker5"));
+        lucas.buyWorkers("worker5", 1);
 
+       
         System.out.println(lucas.getCurrentBalance());
+
+        System.out.println(lucas.getWorkerObject("worker5"));
+        System.out.println(lucas.getHashMap());
 
 
     }

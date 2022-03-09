@@ -4,12 +4,12 @@ package PizzaClickerProject;
 public class Worker {
     private String workertype;
     private int amount;
-    private double pizzaPerSec;
+    private double basePizzaPerSec;
     private double efficiency = 1;
     
-    public Worker(String workertype, double pizzaPerSec) {
+    public Worker(String workertype, double basePizzaPerSec) {
         this.workertype = workertype;
-        this.pizzaPerSec = pizzaPerSec;
+        this.basePizzaPerSec = basePizzaPerSec;
         this.amount = 0;
     }
 
@@ -27,7 +27,7 @@ public class Worker {
 
 
     public double getTotalPizzaPerSec() {
-        return this.amount * this.pizzaPerSec * this.efficiency;
+        return this.amount * this.basePizzaPerSec * this.efficiency;
     }
 
     
@@ -35,7 +35,7 @@ public class Worker {
 
     @Override
     public String toString() {
-        return "Worker [amount=" + amount + ", efficiency=" + efficiency + ", pizzaPerSec=" + pizzaPerSec
+        return "Worker [amount=" + amount + ", efficiency=" + efficiency + ", pizzaPerSec=" + basePizzaPerSec
                 + ", workertype=" + workertype + "]";
     }
     
