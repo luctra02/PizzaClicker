@@ -4,18 +4,16 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class Factory {
     private String factoryName;
     private Date foundingDate;
     private Map<String,ArrayList<Double>> workers = new HashMap<>();
     private Pizza pizza = new Pizza();
-    private Worker worker;
+    // private Worker worker;
     private ArrayList<Worker> workerObjects = new ArrayList<>();
     private double currentBalance = 0;
-    private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("worker1","worker2","worker3","worker4","worker5"));
-
+    private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("john","worker2","worker3","worker4","worker5"));
 
 
     public Factory(String factoryName) {
@@ -25,9 +23,26 @@ public class Factory {
         if(factoryName == "lucaspai"){
             currentBalance = 100000000;
         }
+        this.factoryName = factoryName;
         factoryName += "'s factory";
         foundingDate = new Date();
         InitializeWorkerTypes();
+    }
+
+    public ArrayList<String> getWorkerTypes() {
+        return new ArrayList<>(this.workerTypes);
+    }
+
+    public String getPizzaType() {
+        return pizza.getPizza();
+    }
+
+    public String getFactoryName() { 
+        return this.factoryName;
+    }
+
+    public String getWorkerAmount(int workerindex) {
+        return String.valueOf(workerObjects.get(workerindex).getAmount());
     }
 
     public void clickPizza(){
@@ -38,7 +53,7 @@ public class Factory {
         return currentBalance;
     }
 
-    public void upgradePizza(){
+    public boolean upgradePizza(){
         
         if (pizza.getCurrentPizza() + 1 > pizza.getPizzaTypeLength()) {
             throw new IllegalArgumentException("You already have Grandiosa");
@@ -49,6 +64,12 @@ public class Factory {
         }
         currentBalance -=  pizza.getNextPizzaCost();
         pizza.upgradePizza();
+        return true;
+        
+    }
+
+    public String getCurrentPizza() {
+        return String.valueOf(pizza.getCurrentPizza() + 1);
         
     }
 
@@ -71,6 +92,10 @@ public class Factory {
        
 }
 
+    public double getWorkerCost(int i) {
+        return workers.get(workerTypes.get(i)).get(1);
+    }
+
     public void buyWorkers(String workertype, int amount){
         double cost = workers.get(workertype).get(1);
         double efficiency = workers.get(workertype).get(2);
@@ -92,7 +117,6 @@ public class Factory {
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), cost, efficiency, upgradecost,amount);
 
     }
-
 
 
     public void buyUpgrades(String workertype) {

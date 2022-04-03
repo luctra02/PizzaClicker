@@ -25,6 +25,10 @@ public class Worker {
         return this.amount;
     }
 
+    public String getWorkerType(){
+        return this.workertype; 
+    }
+
 
     public double getTotalPizzaPerSec() {
         return this.amount * this.basePizzaPerSec * this.efficiency;
