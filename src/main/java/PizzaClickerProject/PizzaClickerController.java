@@ -26,10 +26,12 @@ public class PizzaClickerController {
     private Label workerAmount1Label, workerAmount2Label, workerAmount3Label, workerAmount4Label, workerAmount5Label;
 
     @FXML
-    private GridPane workerGrid, upgradeGrid;
+    private GridPane workerGrid, upgradeGrid, buyAmountGrid;
 
 
     private Factory factory;
+
+    private int amount = 1;
 
     private void initFactory(String arg0) {
         factory = new Factory(arg0);
@@ -55,11 +57,12 @@ public class PizzaClickerController {
 
         updateWorkerDisplay();
         updateUpgradeDisplay();
+        updateBuyAmount();
 
     }
 
-    @FXML 
-    private void updateWorkerDisplay() {
+    @FXML
+    private void updateBuyAmount() {
         workerGrid.getChildren().clear();
         for (int i = 0; i < factory.getWorkerTypes().size();i++ ){
             workerGrid.add(createAmountLabel(i),1, i);
@@ -67,6 +70,32 @@ public class PizzaClickerController {
             workerGrid.add(createWorkerLabel(i),0, i);
             workerGrid.add(createWorkerButton(factory.getWorkerObject(factory.getWorkerTypes().get(i))),2,i);
         }
+    }
+
+    @FXML 
+    private void updateWorkerDisplay() {
+        buyAmountGrid.getChildren().clear();
+        buyAmountGrid.add(new Label("Buy Amount:"), 0, 1);
+        buyAmountGrid.add(createBuyAmount(1), 1, 1);
+        buyAmountGrid.add(createBuyAmount(5), 2, 1);
+        buyAmountGrid.add(createBuyAmount(10), 3, 1);
+        buyAmountGrid.add(new Label("Worker Type"), 0, 2);
+        buyAmountGrid.add(new Label("Amount"), 1, 2);
+        buyAmountGrid.add(new Label("Cost"), 3, 2);
+    }
+
+    @FXML
+    private Button createBuyAmount(int i) {
+        Button button = new Button(String.valueOf(i) + "x");
+        button.setOnAction((event)->setAmount(i));
+        button.setMaxWidth(Double.MAX_VALUE);
+        button.setMaxHeight(Double.MAX_VALUE);
+        return button;
+    }
+
+    private void setAmount(int i) {
+        this.amount = i;
+        updateDisplay();
     }
 
     @FXML
@@ -129,7 +158,7 @@ public class PizzaClickerController {
 
     @FXML
     private Label createCostLabel(int i) {
-        Label label = new Label(String.valueOf(factory.formatNumbers(factory.getWorkerCost(i))));
+        Label label = new Label(String.valueOf(factory.formatNumbers(factory.getxWorkerCost(factory.getWorkerCost(i), this.amount))));
         return label;
     }
 
@@ -149,10 +178,11 @@ public class PizzaClickerController {
     }
 
     private void buyWorkersUpdate(Worker worker) {
-        factory.buyWorkers(worker.getWorkerType(),1);
+        factory.buyWorkers(worker.getWorkerType(), this.amount);
         updateDisplay();
     }
 
+    
     private void buyUpgrades(Worker worker) {
         factory.buyUpgrades(worker.getWorkerType());
         updateDisplay();

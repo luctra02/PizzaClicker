@@ -104,6 +104,16 @@ public class Factory {
         return workers.get(workerTypes.get(i)).get(1);
     }
 
+    public double getxWorkerCost(double cost, int amount) {
+        double totalcosts = 0;
+        
+        for (var i=0; i < amount; i++) {
+            totalcosts += cost;
+            cost *= 1.2;
+        }
+        return totalcosts;
+    }
+
     public void buyWorkers(String workertype, int amount){
         double cost = workers.get(workertype).get(1);
         double efficiency = workers.get(workertype).get(2);
