@@ -1,6 +1,7 @@
 package PizzaClickerProject;
 import java.util.Date;
 import java.util.Map;
+import java.util.Timer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,11 +10,13 @@ public class Factory {
     private String factoryName;
     private Date foundingDate;
     private Map<String,ArrayList<Double>> workers = new HashMap<>();
-    private Pizza pizza = new Pizza();
+    private Pizza pizza;
     // private Worker worker;
     private ArrayList<Worker> workerObjects = new ArrayList<>();
     private double currentBalance = 0;
     private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("john","worker2","worker3","worker4","worker5"));
+    private Timer timer;
+    
 
 
     public Factory(String factoryName) {
@@ -25,7 +28,8 @@ public class Factory {
         }
         this.factoryName = factoryName;
         factoryName += "'s factory";
-        foundingDate = new Date();
+        this.pizza = new Pizza();
+        this.foundingDate = new Date();
         InitializeWorkerTypes();
     }
 
@@ -152,10 +156,28 @@ public class Factory {
         return workers;
     }
 
+    public String formatNumbers(double number){
+
+    }
+
+    public double passiveIncome(){
+        double income = 0;
+
+        for (Worker worker : workerObjects) {
+            income += worker.getTotalPizzaPerSec();
+        }
+    
+        this.currentBalance += income;
+        return currentBalance;
+    }
+    
+
+
     @Override
     public String toString() {
         return "Factory [workers=" + workers + "]";
     }
+
 
     public static void main(String[] args) {
 
@@ -163,6 +185,7 @@ public class Factory {
         lucas.buyWorkers("worker5", 1);
         System.out.println(lucas.getWorkerObject("worker5"));
         lucas.buyWorkers("worker5", 1);
+        lucas.buyWorkers("john", 30);
 
        
         System.out.println(lucas.getCurrentBalance());
