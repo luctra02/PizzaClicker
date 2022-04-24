@@ -36,6 +36,24 @@ public class PizzaClickerController {
     private GridPane workerGrid, upgradeGrid, buyAmountGrid, infoGrid;
 
 
+    @FXML
+    ImageView myPizzaImageView;
+
+
+    @FXML
+    private void initImage() {
+
+    }
+
+
+    @FXML
+    private void upgradePizza(){
+        factory.upgradePizza();
+        Image myPizzaImage = new Image(getClass().getResourceAsStream(factory.getCurrentPizza() + ".jpg"));
+        myPizzaImageView.setImage(myPizzaImage);
+
+    }
+
     private Factory factory;
 
     private int amount = 1;
@@ -240,14 +258,6 @@ public class PizzaClickerController {
     private void buyUpgrades(Worker worker) {
         factory.buyUpgrades(worker.getWorkerType());
         updateDisplay();
-    }
-
-
-
-
-    @FXML
-    private void upgradePizza(){
-        
     }
 
     
