@@ -1,7 +1,7 @@
 package PizzaClickerProject;
 import java.util.Date;
 import java.util.Map;
-import java.util.Timer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class Factory {
     private ArrayList<Worker> workerObjects = new ArrayList<>();
     private double currentBalance = 0;
     private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("john","worker2","worker3","worker4","worker5"));
-    private Timer timer;
+
     
 
 
@@ -157,7 +157,12 @@ public class Factory {
     }
 
     public String formatNumbers(double number){
-
+        ArrayList<String> illions = new ArrayList<>(Arrays.asList("K","M","B","T","Q"));
+        if(number < 1000){
+            return new DecimalFormat("###.##").format(number);
+        }
+        double digitGroups = Math.floor(Math.log10(number)/Math.log10(1000));
+        return new DecimalFormat("###.##").format(number/Math.pow(1000, digitGroups)) + " " + illions.get((int) digitGroups -1);
     }
 
     public double passiveIncome(){
@@ -192,6 +197,7 @@ public class Factory {
 
         System.out.println(lucas.getWorkerObject("worker5"));
         System.out.println(lucas.getHashMap());
+        System.out.println(lucas.formatNumbers(pizza.getNextPizzaCost())));
 
 
     }

@@ -16,7 +16,7 @@ public class Pizza {
         return pizzaType;
     }
     
-    public int getNextPizzaCost(){
+    public double getNextPizzaCost(){
         return pizzaCosts.get(currentPizza +1);
     }
 
@@ -40,6 +40,10 @@ public class Pizza {
         return coinsPerClick;
     }
 
+    public static void main(String[] args) {
+        Pizza test = new Pizza();
+        System.out.println(test.getNextPizzaCost());
+    }
 
 
     

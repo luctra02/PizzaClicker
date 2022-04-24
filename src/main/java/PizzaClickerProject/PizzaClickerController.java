@@ -50,7 +50,7 @@ public class PizzaClickerController {
     private void updateDisplay(){
         workerGrid.getChildren().clear();
         this.factoryLabel.setText(factory.getFactoryName());
-        this.balanceLabel.setText(String.valueOf(factory.getCurrentBalance()));
+        this.balanceLabel.setText(String.valueOf(factory.formatNumbers(factory.getCurrentBalance())));
         this.pizzaLabel.setText(factory.getPizzaType());
         workerAmount1Label.setText(factory.getWorkerAmount(0));
         workerAmount2Label.setText(factory.getWorkerAmount(1));
@@ -86,7 +86,7 @@ public class PizzaClickerController {
 
     @FXML
     private Label createCostLabel(int i) {
-        Label label = new Label(String.valueOf(factory.getWorkerCost(i)));
+        Label label = new Label(String.valueOf(factory.formatNumbers(factory.getWorkerCost(i))));
         return label;
     }
 
