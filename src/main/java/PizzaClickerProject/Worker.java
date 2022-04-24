@@ -21,6 +21,10 @@ public class Worker {
         this.amount += amount;
     }
 
+    public double getEfficiency() {
+        return this.efficiency;
+    }
+
     public int getAmount() {
         return this.amount;
     }

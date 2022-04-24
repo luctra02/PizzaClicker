@@ -96,6 +96,10 @@ public class Factory {
        
 }
 
+    public double getWorkerUpgradeCost(int i) {
+        return workers.get(workerTypes.get(i)).get(3);
+    }
+
     public double getWorkerCost(int i) {
         return workers.get(workerTypes.get(i)).get(1);
     }
@@ -134,7 +138,7 @@ public class Factory {
         }
         currentBalance -=  upgradecost;
 
-        efficiency += 0.1;
+        efficiency += 0.02;
         upgradecost *= 1.5;
         temp.increaseEfficiency(efficiency);
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), workers.get(workertype).get(1), efficiency, upgradecost, workers.get(workertype).get(4));
@@ -176,30 +180,19 @@ public class Factory {
         return currentBalance;
     }
     
+    public double getTotalPizzaPerSec() {
+        double income = 0;
+
+        for (Worker worker : workerObjects) {
+            income += worker.getTotalPizzaPerSec();
+        }
+        return income;
+    }
 
 
     @Override
     public String toString() {
         return "Factory [workers=" + workers + "]";
-    }
-
-
-    public static void main(String[] args) {
-
-        Factory lucas = new Factory("lucaspai");
-        lucas.buyWorkers("worker5", 1);
-        System.out.println(lucas.getWorkerObject("worker5"));
-        lucas.buyWorkers("worker5", 1);
-        lucas.buyWorkers("john", 30);
-
-       
-        System.out.println(lucas.getCurrentBalance());
-
-        System.out.println(lucas.getWorkerObject("worker5"));
-        System.out.println(lucas.getHashMap());
-        System.out.println(lucas.formatNumbers(pizza.getNextPizzaCost())));
-
-
     }
 
 }

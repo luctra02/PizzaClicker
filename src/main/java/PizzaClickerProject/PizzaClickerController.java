@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 
 public class PizzaClickerController {
     @FXML
-    private Label balanceLabel, factoryLabel;
+    private Label balanceLabel, factoryLabel, pizzapersecLabel;
 
     @FXML
     private Label pizzaLabel;
@@ -26,7 +26,7 @@ public class PizzaClickerController {
     private Label workerAmount1Label, workerAmount2Label, workerAmount3Label, workerAmount4Label, workerAmount5Label;
 
     @FXML
-    private GridPane workerGrid;
+    private GridPane workerGrid, upgradeGrid;
 
 
     private Factory factory;
@@ -48,22 +48,65 @@ public class PizzaClickerController {
 
     @FXML
     private void updateDisplay(){
-        workerGrid.getChildren().clear();
         this.factoryLabel.setText(factory.getFactoryName());
         this.balanceLabel.setText(String.valueOf(factory.formatNumbers(factory.getCurrentBalance())));
+        this.pizzapersecLabel.setText(String.valueOf(factory.formatNumbers(factory.getTotalPizzaPerSec()) + " coins / sec"));
         this.pizzaLabel.setText(factory.getPizzaType());
-        workerAmount1Label.setText(factory.getWorkerAmount(0));
-        workerAmount2Label.setText(factory.getWorkerAmount(1));
-        workerAmount3Label.setText(factory.getWorkerAmount(2));
-        workerAmount4Label.setText(factory.getWorkerAmount(3));
-        workerAmount5Label.setText(factory.getWorkerAmount(4));
-        for (int i = 0; i < factory.getWorkerTypes().size();i++ ){
-        workerGrid.add(createCostLabel(i),2, i);
-        workerGrid.add(createWorkerLabel(i),0, i);
-        workerGrid.add(createWorkerButton(factory.getWorkerObject(factory.getWorkerTypes().get(i))),1,i);
+
+        updateWorkerDisplay();
+        updateUpgradeDisplay();
 
     }
+
+    @FXML 
+    private void updateWorkerDisplay() {
+        workerGrid.getChildren().clear();
+        for (int i = 0; i < factory.getWorkerTypes().size();i++ ){
+            workerGrid.add(createAmountLabel(i),1, i);
+            workerGrid.add(createCostLabel(i),3, i);
+            workerGrid.add(createWorkerLabel(i),0, i);
+            workerGrid.add(createWorkerButton(factory.getWorkerObject(factory.getWorkerTypes().get(i))),2,i);
+        }
     }
+
+    @FXML
+    private void updateUpgradeDisplay() {
+        upgradeGrid.getChildren().clear();
+        for (int i = 0; i < factory.getWorkerTypes().size();i++) {
+            upgradeGrid.add(createUpgradeLabel(i), 0, i);
+            upgradeGrid.add(createUpgradeEfficiency(factory.getWorkerObject(factory.getWorkerTypes().get(i))), 1, i);
+            upgradeGrid.add(createUpgradeButton(factory.getWorkerObject(factory.getWorkerTypes().get(i))), 2, i);
+            upgradeGrid.add(createUpgradeCost(i), 3, i);
+        }
+    }
+
+    @FXML
+    private Label createUpgradeLabel(int i) {
+        Label label = new Label(factory.getWorkerTypes().get(i));
+        return label;
+    }
+
+    @FXML
+    private Label createUpgradeEfficiency(Worker worker) {
+        Label label = new Label(factory.formatNumbers(worker.getEfficiency()) + "x");
+        return label;
+    }
+
+    @FXML
+    private Button createUpgradeButton(Worker worker) {
+        Button button = new Button("Buy");
+        button.setOnAction((event)->buyUpgrades(worker));
+        button.setMaxWidth(Double.MAX_VALUE);
+        button.setMaxHeight(Double.MAX_VALUE);
+        return button;
+    }
+
+    @FXML
+    private Label createUpgradeCost(int i) {
+        Label label = new Label(String.valueOf(factory.formatNumbers(factory.getWorkerUpgradeCost(i))));
+        return label;
+    }
+
 
     @FXML
     private void initialize() {
@@ -91,6 +134,12 @@ public class PizzaClickerController {
     }
 
     @FXML
+    private Label createAmountLabel(int i) {
+        Label label = new Label(String.valueOf((factory.getWorkerAmount(i))));
+        return label;
+    }
+
+    @FXML
     private Button createWorkerButton(Worker worker){
         Button button = new Button("Buy");
         button.setOnAction((event)->buyWorkersUpdate(worker));
@@ -101,6 +150,11 @@ public class PizzaClickerController {
 
     private void buyWorkersUpdate(Worker worker) {
         factory.buyWorkers(worker.getWorkerType(),1);
+        updateDisplay();
+    }
+
+    private void buyUpgrades(Worker worker) {
+        factory.buyUpgrades(worker.getWorkerType());
         updateDisplay();
     }
 
