@@ -2,13 +2,20 @@ package PizzaClickerProject;
 
 import java.io.FileInputStream;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.io.InputStream;
+import java.util.NoSuchElementException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Button;
 
 
@@ -26,7 +33,7 @@ public class PizzaClickerController {
     private Label workerAmount1Label, workerAmount2Label, workerAmount3Label, workerAmount4Label, workerAmount5Label;
 
     @FXML
-    private GridPane workerGrid, upgradeGrid, buyAmountGrid;
+    private GridPane workerGrid, upgradeGrid, buyAmountGrid, infoGrid;
 
 
     private Factory factory;
@@ -50,15 +57,19 @@ public class PizzaClickerController {
 
     @FXML
     private void updateDisplay(){
-        this.factoryLabel.setText(factory.getFactoryName());
-        this.balanceLabel.setText(String.valueOf(factory.formatNumbers(factory.getCurrentBalance())));
-        this.pizzapersecLabel.setText(String.valueOf(factory.formatNumbers(factory.getTotalPizzaPerSec()) + " coins / sec"));
-        this.pizzaLabel.setText(factory.getPizzaType());
-
         updateWorkerDisplay();
         updateUpgradeDisplay();
         updateBuyAmount();
+        updateInfoDisplay();
 
+    }
+
+    @FXML
+    private void updateInfoDisplay() {
+        this.factoryLabel.setText(factory.getFactoryName());
+        this.balanceLabel.setText("Current balance: " + String.valueOf(factory.formatNumbers(factory.getCurrentBalance())));
+        this.pizzapersecLabel.setText(String.valueOf(factory.formatNumbers(factory.getTotalPizzaPerSec()) + " coins / sec"));
+        this.pizzaLabel.setText(factory.getPizzaType());
     }
 
     @FXML
@@ -139,15 +150,58 @@ public class PizzaClickerController {
 
     @FXML
     private void initialize() {
-        initFactory("lucaspai");
+        initFactory(PopupFactoryName());
         this.pizzaLabel.setText(factory.getPizzaType());
+
 
         for (int i = 0; i < factory.getWorkerTypes().size();i++ ){
             workerGrid.add(createWorkerLabel(i),0, i);
             workerGrid.add(createCostLabel(i),2, i);
             workerGrid.add(createWorkerButton(factory.getWorkerObject(factory.getWorkerTypes().get(i))),1,i);
         }
+
+        var ms = 500;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                factory.passiveIncome(ms);
+                Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                        updateInfoDisplay();
+                    }
+              });
+            }
+        }, 0, ms);
         updateDisplay();
+    }
+
+    @FXML
+    private String PopupFactoryName() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Factory Name Selection");
+        dialog.setHeaderText("Write your username");
+        dialog.setContentText("Write here between 6-20 chars");
+        try {
+            String factoryName = dialog.showAndWait().get();
+            return factoryName;
+
+        } catch (IllegalArgumentException e) {
+            PopupFactoryName();
+        } catch (NoSuchElementException e) {
+            PopupFactoryName();
+        }
+        return "x";
+    }
+
+/*     @FXML
+    private void showError(String error) {
+        
+    } */
+
+    @FXML
+    private void update() {
+        updateInfoDisplay();
     }
 
     @FXML
@@ -188,8 +242,14 @@ public class PizzaClickerController {
         updateDisplay();
     }
 
+
+
+
     @FXML
     private void upgradePizza(){
-
+        
     }
+
+    
+
 }

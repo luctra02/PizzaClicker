@@ -14,7 +14,7 @@ public class Factory {
     // private Worker worker;
     private ArrayList<Worker> workerObjects = new ArrayList<>();
     private double currentBalance = 0;
-    private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("john","worker2","worker3","worker4","worker5"));
+    private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("Deliverer","Cashier","Chef","Manager","CEO"));
 
     
 
@@ -24,10 +24,10 @@ public class Factory {
             throw new IllegalArgumentException("Invalid username! Make sure the name is between 6-20 characters from a-z.");
         }
         if(factoryName == "lucaspai"){
-            currentBalance = 100000000;
+            currentBalance = 1000000;
         }
         this.factoryName = factoryName;
-        factoryName += "'s factory";
+        this.factoryName += "'s factory";
         this.pizza = new Pizza();
         this.foundingDate = new Date();
         InitializeWorkerTypes();
@@ -80,7 +80,7 @@ public class Factory {
     private void InitializeWorkerTypes() {
         // workertype1: pizzaPerSec, cost, efficiency, upgradecost
         double pizzaPerSec = 1;
-        double cost = 100;
+        double cost = 50;
         double efficiency = 1.1;
         double upgradecost = 300;
         double amount = 0;
@@ -179,14 +179,14 @@ public class Factory {
         return new DecimalFormat("###.##").format(number/Math.pow(1000, digitGroups)) + " " + illions.get((int) digitGroups -1);
     }
 
-    public double passiveIncome(){
+    public double passiveIncome(int ms){
         double income = 0;
 
         for (Worker worker : workerObjects) {
             income += worker.getTotalPizzaPerSec();
         }
     
-        this.currentBalance += income;
+        this.currentBalance += income/(1000/ms);
         return currentBalance;
     }
     
