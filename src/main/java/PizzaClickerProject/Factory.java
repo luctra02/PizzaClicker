@@ -135,7 +135,7 @@ public class Factory {
         currentBalance -=  totalcosts;
         //Increases amount of workers in the workertype-class
         temp.increaseAmount(amount);
-        updateWorkers(workertype, temp.getTotalPizzaPerSec(), cost, efficiency, upgradecost, amount);
+        updateWorkers(workertype, temp.getTotalPizzaPerSec(), cost, efficiency, upgradecost, workers.get(workertype).get(4) + amount);
 
     }
 
@@ -151,9 +151,9 @@ public class Factory {
         }
         currentBalance -=  upgradecost;
 
-        efficiency += 0.02;
+        efficiency *= 1.10;
         upgradecost *= 1.5;
-        temp.increaseEfficiency(efficiency);
+        temp.setEfficiency(efficiency);
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), workers.get(workertype).get(1), efficiency, upgradecost, workers.get(workertype).get(4));
     }
 

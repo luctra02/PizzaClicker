@@ -13,10 +13,6 @@ public class Worker {
         this.amount = 0;
     }
 
-    public void increaseEfficiency(double efficiencyIncrease) {
-        this.efficiency *= efficiencyIncrease;
-    }
-
     public void increaseAmount(int amount) {
         this.amount += amount;
     }
