@@ -1,6 +1,7 @@
 package PizzaClickerProject;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ public class PizzaClickerController {
     private Label balanceLabel, factoryLabel, pizzapersecLabel;
 
     @FXML
-    private Label pizzaLabel;
+    private Label pizzaLabel, pizzaCostLabel, pizzaPerClickLabel;
 
     @FXML
     private Label worker1Label, worker2Label, worker3Label, worker4Label, worker5Label;
@@ -37,7 +38,10 @@ public class PizzaClickerController {
 
 
     @FXML
-    ImageView myPizzaImageView;
+    private ImageView myPizzaImageView;
+
+    @FXML
+    private Button pizzaButton;
 
 
     @FXML
@@ -49,8 +53,19 @@ public class PizzaClickerController {
     @FXML
     private void upgradePizza(){
         factory.upgradePizza();
-        Image myPizzaImage = new Image(getClass().getResourceAsStream(factory.getCurrentPizza() + ".jpg"));
+        if (factory.getCurrentPizza()+1 >= factory.getPizzaTypeLength()) {
+            pizzaButton.setText("Maxed out");
+            pizzaButton.disableProperty().set(true);
+            pizzaCostLabel.setText("Max level");
+        } else {
+            pizzaCostLabel.setText(String.valueOf(factory.formatNumbers(factory.getNextPizzaCost())));
+
+        }
+        pizzaPerClickLabel.setText(String.valueOf(factory.formatNumbers(factory.getCoinsPerClick()) + " coins / click"));
+        Image myPizzaImage = new Image(getClass().getResourceAsStream(String.valueOf(factory.getCurrentPizza() + 1)  + ".jpg"));
         myPizzaImageView.setImage(myPizzaImage);
+
+    
 
     }
 
@@ -79,9 +94,15 @@ public class PizzaClickerController {
         updateUpgradeDisplay();
         updateBuyAmount();
         updateInfoDisplay();
+        updateImage();
 
     }
 
+    @FXML void updateImage() {
+        Image myPizzaImage = new Image(getClass().getResourceAsStream(String.valueOf(factory.getCurrentPizza() + 1)  + ".jpg"));
+        myPizzaImageView.setImage(myPizzaImage);
+    }
+    
     @FXML
     private void updateInfoDisplay() {
         this.factoryLabel.setText(factory.getFactoryName());
@@ -169,7 +190,10 @@ public class PizzaClickerController {
     @FXML
     private void initialize() {
         initFactory(PopupFactoryName());
+        this.pizzaPerClickLabel.setText(String.valueOf(factory.formatNumbers(factory.getCoinsPerClick()) + " coins / click"));
         this.pizzaLabel.setText(factory.getPizzaType());
+        this.pizzaCostLabel.setText(factory.formatNumbers(factory.getNextPizzaCost()));
+        
 
 
         for (int i = 0; i < factory.getWorkerTypes().size();i++ ){
@@ -260,6 +284,19 @@ public class PizzaClickerController {
         updateDisplay();
     }
 
+    @FXML
+    private void loadState() throws FileNotFoundException{
+        PizzaStateHandler saveFile = new PizzaStateHandler();
+        factory = saveFile.readPizzaState(factory.getFactoryName());
+        updateDisplay();
+
+    }
     
+    @FXML
+    private void saveState() throws FileNotFoundException{
+        PizzaStateHandler writeFile = new PizzaStateHandler();
+        writeFile.writePizzaState(factory.getFactoryName(), factory);
+        updateDisplay();
+    }
 
 }

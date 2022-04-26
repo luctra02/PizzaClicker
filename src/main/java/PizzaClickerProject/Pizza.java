@@ -8,12 +8,12 @@ public class Pizza {
     // private List <String> toppings = Arrays.asList("Ost", "Rema 1000", "Coop", "Folkets","Dr.Oetker","Big One","Grandiosa");
     // private List <Integer> toppingcost = Arrays.asList(0,1000,5000,10000,30000,50000,100000);
     private int currentPizza = 0;
-    private String pizzaType = pizzaTypes.get(currentPizza);
+    private String pizzaType;
     private int pizzaCost = pizzaCosts.get(currentPizza);
     private int coinsPerClick = 1;
 
     public String getPizza(){
-        return pizzaType;
+        return pizzaTypes.get(currentPizza);
     }
     
     public double getNextPizzaCost(){
@@ -22,6 +22,10 @@ public class Pizza {
 
     public int getCurrentPizza() {
         return currentPizza;
+    }
+
+    public void setCurrentPizza(int i) {
+        this.currentPizza = i;
     }
 
     public int getPizzaTypeLength() {
@@ -36,7 +40,7 @@ public class Pizza {
         coinsPerClick = pizzaCost/100;
     }
 
-    public int getCoinsPerClick(){
+    public double getCoinsPerClick(){
         return coinsPerClick;
     }
 

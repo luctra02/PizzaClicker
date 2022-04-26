@@ -1,10 +1,10 @@
 package PizzaClickerProject;
-import java.util.Date;
-import java.util.Map;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Factory {
     private String factoryName;
@@ -57,6 +57,10 @@ public class Factory {
         return currentBalance;
     }
 
+    public int getPizzaTypeLength() {
+        return pizza.getPizzaTypeLength();
+    }
+
     public boolean upgradePizza(){
         
         if (pizza.getCurrentPizza() + 1 > pizza.getPizzaTypeLength()) {
@@ -72,8 +76,8 @@ public class Factory {
         
     }
 
-    public String getCurrentPizza() {
-        return String.valueOf(pizza.getCurrentPizza() + 1);
+    public int getCurrentPizza() {
+        return pizza.getCurrentPizza();
         
     }
 
@@ -81,7 +85,7 @@ public class Factory {
         // workertype1: pizzaPerSec, cost, efficiency, upgradecost
         double pizzaPerSec = 1;
         double cost = 50;
-        double efficiency = 1.1;
+        double efficiency = 1;
         double upgradecost = 300;
         double amount = 0;
         for (var i=0; i < workerTypes.size(); i++) {
@@ -91,7 +95,6 @@ public class Factory {
             pizzaPerSec *= 5;
             cost *= 10;
             upgradecost *= 5;
-
         }
        
 }
@@ -132,7 +135,7 @@ public class Factory {
         currentBalance -=  totalcosts;
         //Increases amount of workers in the workertype-class
         temp.increaseAmount(amount);
-        updateWorkers(workertype, temp.getTotalPizzaPerSec(), cost, efficiency, upgradecost,amount);
+        updateWorkers(workertype, temp.getTotalPizzaPerSec(), cost, efficiency, upgradecost, amount);
 
     }
 
@@ -153,6 +156,26 @@ public class Factory {
         temp.increaseEfficiency(efficiency);
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), workers.get(workertype).get(1), efficiency, upgradecost, workers.get(workertype).get(4));
     }
+
+    public void setFactoryName(String x) {
+        factoryName = x;
+    }
+
+    public void setWorkers(Map<String,ArrayList<Double>> x) {
+        workers = x;
+        for (Worker worker : workerObjects) {
+            worker.setAmount((int) Math.round(x.get(worker.getWorkerType()).get(4)));
+            worker.setEfficiency((x.get(worker.getWorkerType()).get(2)));
+        }
+    }
+
+    public void setCurrentBalance(double x) {
+        currentBalance = x;
+    }
+
+    public void setCurrentPizza(int x) {
+        pizza.setCurrentPizza(x);
+    }   
 
     public void updateWorkers(String workertype, double pizzaPerSec, double cost, double efficiency, double upgradecost, double amount) {
         ArrayList<Double> newArbeiderCosts = new ArrayList<>(Arrays.asList(pizzaPerSec, cost, efficiency, upgradecost, amount));
@@ -199,10 +222,24 @@ public class Factory {
         return income;
     }
 
+    public double getNextPizzaCost(){
+        return pizza.getNextPizzaCost();
+    }
+
+    public double getCoinsPerClick(){
+        return pizza.getCoinsPerClick();
+    }
+
 
     @Override
     public String toString() {
         return "Factory [workers=" + workers + "]";
     }
 
+    public static void main(String[] args) {
+        Factory lucas = new Factory("lucaspai");
+        lucas.buyWorkers("Chef", 5);
+        System.err.println(lucas.getHashMap());
+        
+    }
 }

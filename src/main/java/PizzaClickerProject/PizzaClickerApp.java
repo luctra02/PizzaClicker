@@ -15,7 +15,7 @@ public class PizzaClickerApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("Grandiosa Clicker");
+        primaryStage.setTitle("Pizza Clicker");
         primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("pizzaclicker.fxml"))));
         primaryStage.show();
     }

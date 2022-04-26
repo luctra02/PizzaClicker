@@ -33,6 +33,15 @@ public class Worker {
         return this.workertype; 
     }
 
+    public void setAmount(int x) {
+        this.amount = x;
+    }
+
+    public void setEfficiency(double x) {
+        this.efficiency = x;
+    }
+
+
 
     public double getTotalPizzaPerSec() {
         return this.amount * this.basePizzaPerSec * this.efficiency;
