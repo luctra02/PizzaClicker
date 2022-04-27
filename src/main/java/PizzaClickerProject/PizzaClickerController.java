@@ -53,17 +53,7 @@ public class PizzaClickerController {
     @FXML
     private void upgradePizza(){
         factory.upgradePizza();
-        if (factory.getCurrentPizza()+1 >= factory.getPizzaTypeLength()) {
-            pizzaButton.setText("Maxed out");
-            pizzaButton.disableProperty().set(true);
-            pizzaCostLabel.setText("Max level");
-        } else {
-            pizzaCostLabel.setText(String.valueOf(factory.formatNumbers(factory.getNextPizzaCost())));
-
-        }
-        pizzaPerClickLabel.setText(String.valueOf(factory.formatNumbers(factory.getCoinsPerClick()) + " coins / click"));
-        Image myPizzaImage = new Image(getClass().getResourceAsStream(String.valueOf(factory.getCurrentPizza() + 1)  + ".jpg"));
-        myPizzaImageView.setImage(myPizzaImage);
+        updateImage();
 
     
 
@@ -101,6 +91,16 @@ public class PizzaClickerController {
     @FXML void updateImage() {
         Image myPizzaImage = new Image(getClass().getResourceAsStream(String.valueOf(factory.getCurrentPizza() + 1)  + ".jpg"));
         myPizzaImageView.setImage(myPizzaImage);
+        pizzaPerClickLabel.setText(String.valueOf(factory.formatNumbers(factory.getCoinsPerClick()) + " coins / click"));
+        if (factory.getCurrentPizza() + 1 >= factory.getPizzaTypeLength()) {
+            pizzaButton.setText("Maxed out");
+            pizzaButton.disableProperty().set(true);
+            pizzaCostLabel.setText("Max level");
+        } else {
+            pizzaCostLabel.setText(String.valueOf(factory.formatNumbers(factory.getNextPizzaCost())));
+
+        }
+        
     }
     
     @FXML

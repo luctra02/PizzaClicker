@@ -175,7 +175,11 @@ public class Factory {
 
     public void setCurrentPizza(int x) {
         pizza.setCurrentPizza(x);
-    }   
+    }
+    
+    public void setPizzaPerClick(double x){
+        pizza.setCoinsPerClick(x);
+    }
 
     public void updateWorkers(String workertype, double pizzaPerSec, double cost, double efficiency, double upgradecost, double amount) {
         ArrayList<Double> newArbeiderCosts = new ArrayList<>(Arrays.asList(pizzaPerSec, cost, efficiency, upgradecost, amount));

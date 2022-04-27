@@ -10,7 +10,7 @@ public class Pizza {
     private int currentPizza = 0;
     private String pizzaType;
     private int pizzaCost = pizzaCosts.get(currentPizza);
-    private int coinsPerClick = 1;
+    private double coinsPerClick = 1;
 
     public String getPizza(){
         return pizzaTypes.get(currentPizza);
@@ -38,6 +38,10 @@ public class Pizza {
         pizzaCost = pizzaCosts.get(currentPizza);
         pizzaType = pizzaTypes.get(currentPizza);
         coinsPerClick = pizzaCost/100;
+    }
+
+    public void setCoinsPerClick(double x){
+        this.coinsPerClick = x;
     }
 
     public double getCoinsPerClick(){
