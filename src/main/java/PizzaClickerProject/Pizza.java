@@ -24,15 +24,19 @@ public class Pizza {
         return currentPizza;
     }
 
+    public int getPizzaTypeLength() {
+        return pizzaTypes.size();
+    }
+
+    public double getCoinsPerClick(){
+        return coinsPerClick;
+    }
+
     public void setCurrentPizza(int i) {
         this.currentPizza = i;
         pizzaCost = pizzaCosts.get(currentPizza);
         coinsPerClick = pizzaCost/100;
-    }
-
-    public int getPizzaTypeLength() {
-        return pizzaTypes.size();
-    }
+    }  
 
 
     public void upgradePizza() {
@@ -43,10 +47,6 @@ public class Pizza {
         coinsPerClick = pizzaCost/100;
     }
 
-
-    public double getCoinsPerClick(){
-        return coinsPerClick;
-    }
 
     public static void main(String[] args) {
         Pizza test = new Pizza();

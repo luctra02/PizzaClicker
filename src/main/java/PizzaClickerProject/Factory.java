@@ -33,53 +33,6 @@ public class Factory {
         InitializeWorkerTypes();
     }
 
-    public ArrayList<String> getWorkerTypes() {
-        return new ArrayList<>(this.workerTypes);
-    }
-
-    public String getPizzaType() {
-        return pizza.getPizza();
-    }
-
-    public String getFactoryName() { 
-        return this.factoryName;
-    }
-
-    public String getWorkerAmount(int workerindex) {
-        return String.valueOf(workerObjects.get(workerindex).getAmount());
-    }
-
-    public void clickPizza(){
-        currentBalance += pizza.getCoinsPerClick();
-    }
-
-    public double getCurrentBalance(){
-        return currentBalance;
-    }
-
-    public int getPizzaTypeLength() {
-        return pizza.getPizzaTypeLength();
-    }
-
-    public void upgradePizza(){
-
-        if (pizza.getCurrentPizza() + 1 >= pizza.getPizzaTypeLength()) {
-            throw new IllegalArgumentException("You already have Grandiosa");
-        }
-
-        if(getCurrentBalance() < pizza.getNextPizzaCost()){
-            throw new IllegalArgumentException("Cannot afford the next Pizzatype");
-        }
-        currentBalance -=  pizza.getNextPizzaCost();
-        pizza.upgradePizza();
-        
-    }
-
-    public int getCurrentPizza() {
-        return pizza.getCurrentPizza();
-        
-    }
-
     private void InitializeWorkerTypes() {
         // workertype1: pizzaPerSec, cost, efficiency, upgradecost
         double pizzaPerSec = 1;
@@ -96,7 +49,38 @@ public class Factory {
             upgradecost *= 5;
         }
        
-}
+    }
+
+    public ArrayList<String> getWorkerTypes() {
+        return new ArrayList<>(this.workerTypes);
+    }
+
+    public String getPizzaType() {
+        return pizza.getPizza();
+    }
+
+    public String getFactoryName() { 
+        return this.factoryName;
+    }
+
+    public double getCurrentBalance(){
+        return currentBalance;
+    }
+
+    public int getPizzaTypeLength() {
+        return pizza.getPizzaTypeLength();
+    }
+
+
+    public String getWorkerAmount(int workerindex) {
+        return String.valueOf(workerObjects.get(workerindex).getAmount());
+    }
+
+    public int getCurrentPizza() {
+        return pizza.getCurrentPizza();
+        
+    }
+
 
     public double getWorkerUpgradeCost(int i) {
         return workers.get(workerTypes.get(i)).get(3);
@@ -115,6 +99,73 @@ public class Factory {
         }
         return totalcosts;
     }
+
+    public Worker getWorkerObject(String workerType) {
+        return workerObjects.get(workerTypes.indexOf(workerType));
+
+    }
+
+    public Map<String,ArrayList<Double>> getHashMap(){
+        return new HashMap<>(workers);
+    }
+
+    public double getTotalPizzaPerSec() {
+        double income = 0;
+
+        for (Worker worker : workerObjects) {
+            income += worker.getTotalPizzaPerSec();
+        }
+        return income;
+    }
+
+    public double getNextPizzaCost(){
+        return pizza.getNextPizzaCost();
+    }
+
+    public double getCoinsPerClick(){
+        return pizza.getCoinsPerClick();
+    }
+
+    public void setFactoryName(String x) {
+        factoryName = x;
+    }
+
+    public void setWorkers(Map<String,ArrayList<Double>> x) {
+        workers = x;
+        for (Worker worker : workerObjects) {
+            worker.setAmount((int) Math.round(x.get(worker.getWorkerType()).get(4)));
+            worker.setEfficiency((x.get(worker.getWorkerType()).get(2)));
+        }
+    }
+
+    public void setCurrentBalance(double x) {
+        currentBalance = x;
+    }
+
+    public void setCurrentPizza(int x) {
+        pizza.setCurrentPizza(x);
+    }
+
+
+    public void clickPizza(){
+        currentBalance += pizza.getCoinsPerClick();
+    }
+
+
+    public void upgradePizza(){
+
+        if (pizza.getCurrentPizza() + 1 >= pizza.getPizzaTypeLength()) {
+            throw new IllegalArgumentException("You already have Grandiosa");
+        }
+
+        if(getCurrentBalance() < pizza.getNextPizzaCost()){
+            throw new IllegalArgumentException("Cannot afford the next Pizzatype");
+        }
+        currentBalance -=  pizza.getNextPizzaCost();
+        pizza.upgradePizza();
+        
+    }
+
 
     public void buyWorkers(String workertype, int amount){
         double cost = workers.get(workertype).get(1);
@@ -154,28 +205,7 @@ public class Factory {
         upgradecost *= 1.5;
         temp.setEfficiency(efficiency);
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), workers.get(workertype).get(1), efficiency, upgradecost, workers.get(workertype).get(4));
-    }
-
-    public void setFactoryName(String x) {
-        factoryName = x;
-    }
-
-    public void setWorkers(Map<String,ArrayList<Double>> x) {
-        workers = x;
-        for (Worker worker : workerObjects) {
-            worker.setAmount((int) Math.round(x.get(worker.getWorkerType()).get(4)));
-            worker.setEfficiency((x.get(worker.getWorkerType()).get(2)));
-        }
-    }
-
-    public void setCurrentBalance(double x) {
-        currentBalance = x;
-    }
-
-    public void setCurrentPizza(int x) {
-        pizza.setCurrentPizza(x);
-    }
-    
+    }    
     
 
     public void updateWorkers(String workertype, double pizzaPerSec, double cost, double efficiency, double upgradecost, double amount) {
@@ -183,16 +213,6 @@ public class Factory {
         workers.put(workertype, newArbeiderCosts);
     }
 
-    
-
-    public Worker getWorkerObject(String workerType) {
-        return workerObjects.get(workerTypes.indexOf(workerType));
-
-    }
-
-    public Map<String,ArrayList<Double>> getHashMap(){
-        return new HashMap<>(workers);
-    }
 
     public String formatNumbers(double number){
         ArrayList<String> illions = new ArrayList<>(Arrays.asList("K","M","B","T","Q"));
@@ -212,23 +232,6 @@ public class Factory {
     
         this.currentBalance += income/(1000/ms);
         return currentBalance;
-    }
-    
-    public double getTotalPizzaPerSec() {
-        double income = 0;
-
-        for (Worker worker : workerObjects) {
-            income += worker.getTotalPizzaPerSec();
-        }
-        return income;
-    }
-
-    public double getNextPizzaCost(){
-        return pizza.getNextPizzaCost();
-    }
-
-    public double getCoinsPerClick(){
-        return pizza.getCoinsPerClick();
     }
 
 

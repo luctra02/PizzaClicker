@@ -13,10 +13,6 @@ public class Worker {
         this.amount = 0;
     }
 
-    public void increaseAmount(int amount) {
-        this.amount += amount;
-    }
-
     public double getEfficiency() {
         return this.efficiency;
     }
@@ -29,6 +25,10 @@ public class Worker {
         return this.workertype; 
     }
 
+    public double getTotalPizzaPerSec() {
+        return this.amount * this.basePizzaPerSec * this.efficiency;
+    }
+
     public void setAmount(int x) {
         this.amount = x;
     }
@@ -37,14 +37,9 @@ public class Worker {
         this.efficiency = x;
     }
 
-
-
-    public double getTotalPizzaPerSec() {
-        return this.amount * this.basePizzaPerSec * this.efficiency;
+    public void increaseAmount(int amount) {
+        this.amount += amount;
     }
-
-    
-    
 
     @Override
     public String toString() {
