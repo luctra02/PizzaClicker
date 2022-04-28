@@ -13,7 +13,7 @@ public class Factory {
     private Pizza pizza;
     // private Worker worker;
     private ArrayList<Worker> workerObjects = new ArrayList<>();
-    private double currentBalance = 1000000;
+    private double currentBalance = 0;
     private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("Deliverer","Cashier","Chef","Manager","CEO"));
 
     
@@ -23,7 +23,7 @@ public class Factory {
         if(!factoryName.matches("[A-z-0-9]{6,20}")){
             throw new IllegalArgumentException("Invalid username! Make sure the name is between 6-20 characters from a-z.");
         }
-        if(factoryName == "lucaspai"){
+        if(factoryName == "admin"){
             currentBalance = 1000000;
         }
         this.factoryName = factoryName;
