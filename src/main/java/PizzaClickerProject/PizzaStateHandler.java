@@ -15,7 +15,6 @@ public class PizzaStateHandler implements IPizzaStateHandler {
             writer.println(factory.getFactoryName());
             writer.println(factory.getCurrentBalance());
             writer.println(factory.getCurrentPizza());
-            writer.println(factory.getCoinsPerClick());
             var i = 0;
             var HashMapSet = factory.getHashMap().keySet();
             ArrayList<String> listOfKeys = new ArrayList<String>(HashMapSet);
@@ -38,7 +37,6 @@ public class PizzaStateHandler implements IPizzaStateHandler {
             x.setFactoryName(reader.nextLine());
             x.setCurrentBalance(Double.parseDouble(reader.nextLine()));
             x.setCurrentPizza(Integer.parseInt(reader.nextLine()));
-            x.setPizzaPerClick(Double.parseDouble(reader.nextLine()));
             while(reader.hasNextLine()){
                 String keyValue = reader.nextLine();
                 String currentLine = reader.nextLine();

@@ -26,6 +26,8 @@ public class Pizza {
 
     public void setCurrentPizza(int i) {
         this.currentPizza = i;
+        pizzaCost = pizzaCosts.get(currentPizza);
+        coinsPerClick = pizzaCost/100;
     }
 
     public int getPizzaTypeLength() {
@@ -40,9 +42,6 @@ public class Pizza {
         coinsPerClick = pizzaCost/100;
     }
 
-    public void setCoinsPerClick(double x){
-        this.coinsPerClick = x;
-    }
 
     public double getCoinsPerClick(){
         return coinsPerClick;
