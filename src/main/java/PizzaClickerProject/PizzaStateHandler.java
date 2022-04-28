@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class PizzaStateHandler implements IPizzaStateHandler {
 
@@ -15,8 +16,8 @@ public class PizzaStateHandler implements IPizzaStateHandler {
             writer.println(factory.getFactoryName());
             writer.println(factory.getCurrentBalance());
             writer.println(factory.getCurrentPizza());
-            var i = 0;
-            var HashMapSet = factory.getHashMap().keySet();
+            int i = 0;
+            Set<String> HashMapSet = factory.getHashMap().keySet();
             ArrayList<String> listOfKeys = new ArrayList<String>(HashMapSet);
             System.out.println(factory.getHashMap());
             System.out.println(factory.getHashMap().values());
@@ -57,7 +58,7 @@ public class PizzaStateHandler implements IPizzaStateHandler {
     }
 
     private static File getFile(String filename) {
-        return new File(/* PizzaStateHandler.class.getResource("PizzaSaves/").getFile() + */ filename + ".txt");
+        return new File(PizzaStateHandler.class.getResource("PizzaSaves/").getFile() +  filename + ".txt");
     }
     
     public static void main(String[] args) throws FileNotFoundException {

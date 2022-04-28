@@ -192,7 +192,7 @@ public class Factory {
     }
 
     public Map<String,ArrayList<Double>> getHashMap(){
-        return workers;
+        return new HashMap<>(workers);
     }
 
     public String formatNumbers(double number){
