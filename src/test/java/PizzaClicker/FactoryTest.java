@@ -14,7 +14,7 @@ public class FactoryTest {
 
     @BeforeEach
     public void setup() {
-        factory = new Factory("creampie");
+        factory = new Factory("lucaspai");
 
     }
 
