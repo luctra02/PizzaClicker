@@ -1,5 +1,5 @@
-dasdasdas's factory
-12.0
+dasdsadasd's factory
+9.0
 0
 Deliverer
 [1.0, 50.0, 1.0, 300.0, 0.0]

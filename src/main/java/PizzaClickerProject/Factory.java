@@ -61,9 +61,9 @@ public class Factory {
         return pizza.getPizzaTypeLength();
     }
 
-    public boolean upgradePizza(){
-        
-        if (pizza.getCurrentPizza() + 1 > pizza.getPizzaTypeLength()) {
+    public void upgradePizza(){
+
+        if (pizza.getCurrentPizza() + 1 >= pizza.getPizzaTypeLength()) {
             throw new IllegalArgumentException("You already have Grandiosa");
         }
 
@@ -72,7 +72,6 @@ public class Factory {
         }
         currentBalance -=  pizza.getNextPizzaCost();
         pizza.upgradePizza();
-        return true;
         
     }
 
@@ -151,7 +150,7 @@ public class Factory {
         }
         currentBalance -=  upgradecost;
 
-        efficiency *= 1.10;
+        efficiency *= 1.1;
         upgradecost *= 1.5;
         temp.setEfficiency(efficiency);
         updateWorkers(workertype, temp.getTotalPizzaPerSec(), workers.get(workertype).get(1), efficiency, upgradecost, workers.get(workertype).get(4));

@@ -58,7 +58,7 @@ public class PizzaStateHandler implements IPizzaStateHandler {
     }
 
     private static File getFile(String filename) {
-        return new File(PizzaStateHandler.class.getResource("PizzaSaves/").getFile() +  filename + ".txt");
+        return new File(/* PizzaStateHandler.class.getResource("PizzaSaves/").getFile() +*/ filename + ".txt");
     }
     
     public static void main(String[] args) throws FileNotFoundException {

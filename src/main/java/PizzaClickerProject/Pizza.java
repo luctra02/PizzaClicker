@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Pizza {
     private List <String> pizzaTypes = Arrays.asList("First Price", "Rema 1000", "Coop", "Folkets","Dr.Oetker","Big One","Grandiosa");
-    private List <Integer> pizzaCosts = Arrays.asList(0,1000,5000,10000,30000,50000,100000);
+    private List <Integer> pizzaCosts = Arrays.asList(100,1000,5000,10000,30000,50000,100000);
     // private List <String> toppings = Arrays.asList("Ost", "Rema 1000", "Coop", "Folkets","Dr.Oetker","Big One","Grandiosa");
     // private List <Integer> toppingcost = Arrays.asList(0,1000,5000,10000,30000,50000,100000);
     private int currentPizza = 0;
@@ -36,6 +36,7 @@ public class Pizza {
 
 
     public void upgradePizza() {
+
         currentPizza++;
         pizzaCost = pizzaCosts.get(currentPizza);
         pizzaType = pizzaTypes.get(currentPizza);
