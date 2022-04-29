@@ -16,14 +16,14 @@ public class FileTest {
 
         @BeforeEach
         public void setup() {
-            Factory = new Factory("lucaspai");
+            Factory = new Factory("test123");
             ReaderWriter = new PizzaStateHandler();
         }
     
     /* 
     Slik ser valid_save_test.txt ut:
     
-    lucaspai's factory
+    test123's factory
     12.0
     3
     Deliverer
@@ -39,7 +39,7 @@ public class FileTest {
     
     Slik ser invalid_save_test.txt ut:
 
-    lucaspai's factory
+    test123's factory
     Deliverer
     [1.0, 50.0]
     Manager
@@ -49,8 +49,16 @@ public class FileTest {
     */
     
     @Test
-    public void testLoadSaveFile(){
-            
+    public void testLoadSaveFile() throws FileNotFoundException{
+        Factory FactoryCopy = ReaderWriter.readPizzaState("/TestSaves/valid_save_test");
+        assertEquals(FactoryCopy.getCurrentBalance(), 12.0);
+        assertEquals(FactoryCopy.getFactoryName(), "test123's factory");
+        Factory.setCurrentPizza(3);
+        assertEquals(FactoryCopy.getCoinsPerClick() , Factory.getCoinsPerClick());
+        assertEquals(FactoryCopy.getWorkerAmount(0), "4");
+        // amount * basePizzaPerSec * efficiency for hver workerTypes = TotalPizzaPerSec
+        assertEquals(FactoryCopy.getTotalPizzaPerSec(), (double)(4*1*1.4) + (125*2) + (625*1) + (25*3) + (5*5*1.2) );
+        
     }
 
     @Test
