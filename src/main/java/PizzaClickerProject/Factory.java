@@ -2,16 +2,13 @@ package PizzaClickerProject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Factory {
     private String factoryName;
-    private Date foundingDate;
     private Map<String,ArrayList<Double>> workers = new HashMap<>();
     private Pizza pizza;
-    // private Worker worker;
     private ArrayList<Worker> workerObjects = new ArrayList<>();
     private double currentBalance = 0;
     private ArrayList<String> workerTypes = new ArrayList<>(Arrays.asList("Deliverer","Cashier","Chef","Manager","CEO"));
@@ -27,7 +24,6 @@ public class Factory {
         this.factoryName = factoryName;
         this.factoryName += "'s factory";
         this.pizza = new Pizza();
-        this.foundingDate = new Date();
         InitializeWorkerTypes();
     }
 
@@ -78,7 +74,6 @@ public class Factory {
         return pizza.getCurrentPizza();
         
     }
-
 
     public double getWorkerUpgradeCost(int i) {
         return workers.get(workerTypes.get(i)).get(3);
@@ -180,6 +175,7 @@ public class Factory {
         if (getCurrentBalance() < totalcosts) { 
             throw new IllegalArgumentException("Cannot afford to buy workers");
         }
+        
         currentBalance -=  totalcosts;
         //Increases amount of workers in the workertype-class
         temp.increaseAmount(amount);
@@ -230,18 +226,5 @@ public class Factory {
     
         this.currentBalance += income/(1000/ms);
         return currentBalance;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Factory [workers=" + workers + "]";
-    }
-
-    public static void main(String[] args) {
-        Factory lucas = new Factory("lucaspai");
-        lucas.buyWorkers("Chef", 5);
-        System.err.println(lucas.getHashMap());
-        
     }
 }

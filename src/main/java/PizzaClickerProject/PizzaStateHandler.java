@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -34,12 +33,12 @@ public class PizzaStateHandler implements IPizzaStateHandler {
 
     @Override
     public Factory readPizzaState(String filename) throws FileNotFoundException {
-        Factory x = new Factory("XXXXXX");
+        Factory tempFactory = new Factory("XXXXXX");
+        int i = 0;
         try (Scanner reader = new Scanner(getFile(filename))) {
-            int i = 0;
-            x.setFactoryName(reader.nextLine());
-            x.setCurrentBalance(Double.parseDouble(reader.nextLine()));
-            x.setCurrentPizza(Integer.parseInt(reader.nextLine()));
+            tempFactory.setFactoryName(reader.nextLine());
+            tempFactory.setCurrentBalance(Double.parseDouble(reader.nextLine()));
+            tempFactory.setCurrentPizza(Integer.parseInt(reader.nextLine()));
             while(reader.hasNextLine()){
                 String keyValue = reader.nextLine();
                 String currentLine = reader.nextLine();
@@ -48,15 +47,15 @@ public class PizzaStateHandler implements IPizzaStateHandler {
                 for (String string : workerValues) {     
                     values.add(Double.parseDouble(string));
                 }
-                x.updateWorkers(keyValue, values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
+                tempFactory.updateWorkers(keyValue, values.get(0), values.get(1), values.get(2), values.get(3), values.get(4));
                 i++;
             }
 
             
         }
-        x.setWorkers(x.getHashMap());
-        System.out.println(x.getHashMap());
-        return x;
+        tempFactory.setWorkers(tempFactory.getHashMap());
+        System.out.println(tempFactory.getHashMap());
+        return tempFactory;
     }
 
     private static File getFile(String filename) {
@@ -64,19 +63,4 @@ public class PizzaStateHandler implements IPizzaStateHandler {
         return new File(path.toAbsolutePath().getParent() + "/src/main/java/PizzaClickerProject/PizzaSaves/" + filename + ".txt" );
     }
 
-
-    
-    public static void main(String[] args) throws FileNotFoundException {
-        PizzaStateHandler x = new PizzaStateHandler();
-        Factory y = new Factory("Lucaspai");
-        x.writePizzaState("yy", y);
-        x.readPizzaState("invalid_save_test");
-        
-
-    
-
-         
-
-        
-    }
 }

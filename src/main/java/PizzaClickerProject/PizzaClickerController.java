@@ -1,15 +1,11 @@
 package PizzaClickerProject;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-
-import java.io.InputStream;
 import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;

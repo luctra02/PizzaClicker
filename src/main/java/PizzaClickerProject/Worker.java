@@ -40,25 +40,4 @@ public class Worker {
     public void increaseAmount(int amount) {
         this.amount += amount;
     }
-
-    @Override
-    public String toString() {
-        return "Worker [amount=" + amount + ", efficiency=" + efficiency + ", pizzaPerSec=" + basePizzaPerSec
-                + ", workertype=" + workertype + "]";
-    }
-    
-
-    public static void main(String[] args) {
-        
-    }
-
-    
-
-    
-
-
-
-
-    // Prestige?
-
 }
