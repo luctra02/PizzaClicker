@@ -17,6 +17,8 @@ import java.util.TimerTask;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 
@@ -52,10 +54,13 @@ public class PizzaClickerController {
 
     @FXML
     private void upgradePizza(){
-        factory.upgradePizza();
-        updateImage();
-
-    
+        try {
+            factory.upgradePizza();
+            updateImage();
+        }catch(IllegalArgumentException e){
+            showErrorMessage("Not enough balance!");
+        }
+ 
 
     }
 
@@ -63,9 +68,9 @@ public class PizzaClickerController {
 
     private int amount = 1;
 
-    private void initFactory(String arg0) {
-        factory = new Factory(arg0);
-    }
+    private void initFactory(String factoryName) {
+        factory = new Factory(factoryName);
+}
 
     @FXML 
     private void NameFactory() {
@@ -189,7 +194,7 @@ public class PizzaClickerController {
 
     @FXML
     private void initialize() {
-        initFactory(PopupFactoryName());
+        PopupFactoryName();
         this.pizzaPerClickLabel.setText(String.valueOf(factory.formatNumbers(factory.getCoinsPerClick()) + " coins / click"));
         this.pizzaLabel.setText(factory.getPizzaType());
         this.pizzaCostLabel.setText(factory.formatNumbers(factory.getNextPizzaCost()));
@@ -219,21 +224,24 @@ public class PizzaClickerController {
     }
 
     @FXML
-    private String PopupFactoryName() {
+    private void PopupFactoryName() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Factory Name Selection");
         dialog.setHeaderText("Write your username");
         dialog.setContentText("Write here between 6-20 chars");
         try {
             String factoryName = dialog.showAndWait().get();
-            return factoryName;
+            if (factoryName == null) {
+                throw new NoSuchElementException();
+            }
+            initFactory(factoryName);
 
         } catch (IllegalArgumentException e) {
+            showErrorMessage("Keep the name between 6 and 20 characters and do not use any special letters or symbols");
             PopupFactoryName();
         } catch (NoSuchElementException e) {
-            PopupFactoryName();
+            
         }
-        return "x";
     }
 
 /*     @FXML
@@ -254,7 +262,7 @@ public class PizzaClickerController {
 
     @FXML
     private Label createCostLabel(int i) {
-        Label label = new Label(String.valueOf(factory.formatNumbers(factory.getxWorkerCost(factory.getWorkerCost(i), this.amount))));
+        Label label = new Label(String.valueOf(factory.formatNumbers(factory.getAmountWorkerCost(factory.getWorkerCost(i), this.amount))));
         return label;
     }
 
@@ -297,6 +305,13 @@ public class PizzaClickerController {
         PizzaStateHandler writeFile = new PizzaStateHandler();
         writeFile.writePizzaState(factory.getFactoryName(), factory);
         updateDisplay();
+    }
+
+    private void showErrorMessage(String errorMessage) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(errorMessage);
+        alert.showAndWait();
     }
 
 }

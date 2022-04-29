@@ -23,7 +23,7 @@ public class Factory {
         if(!factoryName.matches("[A-z-0-9]{6,20}")){
             throw new IllegalArgumentException("Invalid username! Make sure the name is between 6-20 characters from a-z.");
         }
-        
+
         this.factoryName = factoryName;
         this.factoryName += "'s factory";
         this.pizza = new Pizza();
@@ -88,7 +88,7 @@ public class Factory {
         return workers.get(workerTypes.get(i)).get(1);
     }
 
-    public double getxWorkerCost(double cost, int amount) {
+    public double getAmountWorkerCost(double cost, int amount) {
         double totalcosts = 0;
         
         for (var i=0; i < amount; i++) {
