@@ -278,14 +278,22 @@ public class PizzaClickerController {
     }
 
     private void buyWorkersUpdate(Worker worker) {
-        factory.buyWorkers(worker.getWorkerType(), this.amount);
-        updateDisplay();
+        try {
+            factory.buyWorkers(worker.getWorkerType(), this.amount);
+            updateDisplay();
+        }catch(IllegalArgumentException e){
+            showErrorMessage("Not enough balance!");
+        }
     }
 
     
     private void buyUpgrades(Worker worker) {
-        factory.buyUpgrades(worker.getWorkerType());
-        updateDisplay();
+        try {
+            factory.buyUpgrades(worker.getWorkerType());
+            updateDisplay();
+        }catch(IllegalArgumentException e){
+            showErrorMessage("Not enough balance!");
+        }
     }
 
     @FXML
