@@ -23,9 +23,7 @@ public class Factory {
         if(!factoryName.matches("[A-z-0-9]{6,20}")){
             throw new IllegalArgumentException("Invalid username! Make sure the name is between 6-20 characters from a-z.");
         }
-        if(factoryName == "admin"){
-            currentBalance = 1000000;
-        }
+        
         this.factoryName = factoryName;
         this.factoryName += "'s factory";
         this.pizza = new Pizza();

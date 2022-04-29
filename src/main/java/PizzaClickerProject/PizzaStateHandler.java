@@ -3,6 +3,8 @@ package PizzaClickerProject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -58,18 +60,23 @@ public class PizzaStateHandler implements IPizzaStateHandler {
     }
 
     private static File getFile(String filename) {
-        return new File(/* PizzaStateHandler.class.getResource("PizzaSaves/").getFile() +*/ filename + ".txt");
+        Path path = Paths.get("PizzaStateHandler.java");
+        return new File(path.toAbsolutePath().getParent() + "/src/main/java/PizzaClickerProject/PizzaSaves/" + filename + ".txt" );
     }
+
+
     
     public static void main(String[] args) throws FileNotFoundException {
         PizzaStateHandler x = new PizzaStateHandler();
         Factory y = new Factory("Lucaspai");
-        y.buyWorkers("Deliverer", 5);
-        x.writePizzaState("sss", y); 
+        x.writePizzaState("yy", y);
+        x.readPizzaState("invalid_save_test");
+        
+
     
-        System.out.println(y.getHashMap());
+
          
-        System.out.println(x.readPizzaState("sss").getHashMap());
+
         
     }
 }
